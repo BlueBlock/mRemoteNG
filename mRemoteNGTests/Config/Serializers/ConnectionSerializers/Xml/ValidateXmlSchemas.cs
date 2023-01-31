@@ -51,6 +51,7 @@ namespace mRemoteNGTests.Config.Serializers.ConnectionSerializers.Xml
             var xml = _serializer.Serialize(_connectionTreeModel);
             var schemaFileName = $"mremoteng_confcons_v{_serializer.Version.Major}_{_serializer.Version.Minor}.xsd";
             var schemaFile = GetTargetPath(schemaFileName);
+            _xmlReaderSettings.DtdProcessing = DtdProcessing.Prohibit;
             _xmlReaderSettings.Schemas.Add("http://mremoteng.org", schemaFile);
             _xmlReaderSettings.ValidationEventHandler += (sender, args) =>
             {
