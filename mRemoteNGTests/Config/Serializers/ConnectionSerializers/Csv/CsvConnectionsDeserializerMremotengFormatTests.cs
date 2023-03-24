@@ -64,7 +64,7 @@ namespace mRemoteNGTests.Config.Serializers.ConnectionSerializers.Csv
             Assert.That(con1.Parent, Is.EqualTo(folder1));
         }
 
-        internal static ConnectionInfo GetTestConnection()
+        private static ConnectionInfo GetTestConnection()
         {
             return new ConnectionInfo
             {
@@ -117,7 +117,8 @@ namespace mRemoteNGTests.Config.Serializers.ConnectionSerializers.Csv
                 DisableCursorShadow = false,
                 DisableCursorBlinking = false,
                 CacheBitmaps = true,
-                RedirectDiskDrives = true,
+                RedirectDiskDrives = RDPDiskDrives.None,
+                RedirectDiskDrivesCustom = "",
                 RedirectPorts = true,
                 RedirectPrinters = true,
                 RedirectSmartCards = true,
@@ -142,7 +143,7 @@ namespace mRemoteNGTests.Config.Serializers.ConnectionSerializers.Csv
             };
         }
 
-        internal static ConnectionInfo GetTestConnectionWithAllInherited()
+        private static ConnectionInfo GetTestConnectionWithAllInherited()
         {
             var connectionInfo = new ConnectionInfo();
             connectionInfo.Inheritance.TurnOnInheritanceCompletely();
@@ -181,7 +182,7 @@ namespace mRemoteNGTests.Config.Serializers.ConnectionSerializers.Csv
                 {
                     nameof(ConnectionInfoInheritance.EverythingInherited),
                     nameof(ConnectionInfoInheritance.Parent),
-					nameof(ConnectionInfoInheritance.EverythingInherited)
+                    nameof(ConnectionInfoInheritance.EverythingInherited)
                 };
                 var properties = typeof(ConnectionInfoInheritance)
                     .GetProperties()
@@ -190,10 +191,10 @@ namespace mRemoteNGTests.Config.Serializers.ConnectionSerializers.Csv
                 var testInheritance = GetTestConnectionWithAllInherited().Inheritance;
 
                 return properties
-	                .Select(property => 
-		                new TestCaseData(property.Name)
-			                .Returns(property.GetValue(testInheritance)))
-	                .ToList();
+                    .Select(property =>
+                        new TestCaseData(property.Name)
+                            .Returns(property.GetValue(testInheritance)))
+                    .ToList();
             }
         }
     }
